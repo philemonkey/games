@@ -1,40 +1,505 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+	<title>reveal.js</title>
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/custom.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+
+			<!-- Title Slide -->
+			<section data-background-color="white" data-background="images/bild.png" data-background-opacity="0.5"
+				data-auto-animate>
+				<h1>CONSTRAINT SATISFACTION PROBLEMS</h1>
+			</section>
+
+			<!-- Title Slide -->
+			<section data-background-color="white" data-background="images/bild.png" data-background-opacity="0.5"
+				data-auto-animate>
+				<h1>CONSTRAINT SATISFACTION PROBLEMS</h1>
+				<h2 style="opacity: 0.0;">Breaking Open the Black Box:</h2>
+				<h3 style="opacity: 0.0;">Factored Representations and General Heuristics</h3>
+			</section>
+
+			<!-- Title with Subtitle -->
+			<section data-background-color="white" data-background="images/bild.png" data-background-opacity="0.5"
+				data-auto-animate data-auto-animate-duration="3.0">
+				<h1>CONSTRAINT SATISFACTION PROBLEMS</h1>
+				<h2 style="opacity: 1.0;">Breaking Open the Black Box:</h2>
+				<h3 style="opacity: 1.0;">Factored Representations and General Heuristics</h3>
+			</section>
+
+
+			<!-- Definition and Explanation -->
+			<section data-background-color="white" data-background="images/bild.png" data-background-opacity="0.2">
+
+				<section>
+					<h2>Defining Constraint Satisfaction Problems</h2>
+					<h3>Components of CSP</h3>
+					<ul>
+						<li class="fragment"><b>Variables:</b> Elements that need to be assigned</li>
+						<li class="fragment"><b>Domains:</b> Possible values that variables can take</li>
+						<li class="fragment"><b>Constraints:</b> Rules that restrict combinations of values</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Variables</h2>
+					<ul>
+						<li class="fragment">Representation: X = { X<sub>1</sub>, X<sub>2</sub>, ..., X<sub>n</sub> }
+						</li>
+						<li class="fragment">Role: Decision elements in state space</li>
+						<li class="fragment">Example: In the cryptarithmetic puzzle TWO + TWO = FOUR, the variables are
+							X
+							= { <em>F, T, U, W, R, O</em> }
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Domains</h2>
+					<ul>
+						<li class="fragment">Representation: D = { D<sub>1</sub>, D<sub>2</sub>, ..., D<sub>n</sub> }
+						</li>
+						<li class="fragment">Role: Value sets for variables</li>
+						<li class="fragment">Example: D<sub>digits</sub> = { 0, 1, ..., 8, 9 }</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Constraints</h2>
+					<ul>
+						<li class="fragment">Representation: C = { C<sub>1</sub>, C<sub>2</sub>, ..., C<sub>m</sub> }
+						</li>
+						<li class="fragment">Role: Rules or equations to be satisfied</li>
+						<li class="fragment">Example: C<sub>1</sub> = <em>O</em> + <em>O</em> = <em>R</em> + 10 &#215;
+							<em>y</em><sub>1</sub> (<em>y</em><sub>1</sub>: auxiliary variable carry-over).
+						</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Example: Sudoku</h2>
+					<p>Variables: 81 cells, represented as x<sub>i, j</sub> where 1 &le; i, j &le;9</p>
+
+					<p>Each cell in the Sudoku grid is a variable. The grid has 9 rows and 9 columns,
+						making for 81 cells in total. x<sub>i, j</sub> represents the cell at the i-th row
+						and j-th column.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Example: Sudoku</h2>
+					<p>Domains: { 1, 2, 3, ..., 9 }</p>
+
+					<p>Each cell can contain a digit from 1 to 9, so the domain for each variable is { 1,
+						2, 3, ..., 9 }.</p>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Example: Sudoku</h2>
+					<p>Constraints: </p>
+					<ul style="font-size: 0.8em;">
+						<li>
+							1. For all <em>i</em>, <em>j</em>, <em>k</em> where <em>j</em> &ne; <em>k</em>:
+							<br>
+							<em>C</em><sub>1</sub>: <em>x</em><sub><em>i,j</em></sub> &ne;
+							<em>x</em><sub><em>i,k</em></sub>
+						</li>
+						<li>
+							2. For all <em>j</em>, <em>i</em>, <em>k</em> where <em>i</em> &ne; <em>k</em>:
+							<br>
+							<em>C</em><sub>2</sub>: <em>x</em><sub><em>i,j</em></sub> &ne;
+							<em>x</em><sub><em>k,j</em></sub>
+						</li>
+						<li>
+							3. For all <em>a</em>, <em>b</em> in {1, 4, 7} and for all <em>i, j</em> in {<em>a,
+								a+1, a+2</em>} &times; {<em>b, b+1, b+2</em>} where (<em>i, j</em>) &ne; (<em>k,
+								l</em>):
+							<br>
+							<em>C</em><sub>3</sub>: <em>x</em><sub><em>i,j</em></sub> &ne;
+							<em>x</em><sub><em>k,l</em></sub>
+						</li>
+					</ul>
+
+					<p style="font-size: 0.8em;">The constraints ensure that each row, each column, and each of the nine
+						3x3 boxes
+						must contain all of the digits from 1 to 9.</p>
+				</section>
+
+			</section>
+
+
+			<!-- Another Example: Australia -->
+			<section data-background-color="white" data-background="images/coloring_australia_background.png"
+				data-background-opacity="0.2">
+				<section>
+					<h1>Example: Australia Map-Coloring</h1>
+				</section>
+
+				<section data-auto-animate>
+					<img data-id="australia_pic" class="custom_image" src="images/australia_clean.png"
+						style="width: 40%; height: auto;">
+
+					<h4>Australia Map-Coloring: Overview</h4>
+					<ul class="problem_tables" title="australia">
+						<li class="fragment">Task
+							- Color each state/territory in Australia with <span style="color: red;">red</span>,
+							<span style="color: green;">green</span>, or <span style="color: blue;">blue</span>.
+						</li>
+
+						<li class="fragment">No two neighboring regions should have the same color.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<img data-id="australia_pic" class="custom_image" src="images/australia_clean.png"
+						style="width: 40%; height: auto;">
+
+
+					<h4>Variables and Domains in the CSP</h4>
+					<ul class="problem_tables" title="australia">
+						<li class="fragment">Variables - Regions of Australia (WA, NT, Q, NSW, V, SA, T).</li>
+						<li class="fragment">Domain for each variable - {<span style="color: red;">red</span>, <span
+								style="color: green;">green</span>, <span style="color: blue;">blue</span>}.</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<img data-id="australia_pic" class="custom_image" src="images/australia_clean.png"
+						style="width: 40%; height: auto;">
+
+
+					<h4>Constraints in the Australia CSP</h4>
+					<ul class="problem_tables" title="australia">
+						<li class="fragment">
+							Neighboring regions must have distinct colors.</li>
+						<li class="fragment">
+							Nine specific constraints between neighboring regions (e.g., SA ≠ WA).</li>
+						<li class="fragment">
+							Example of a constraint: SA ≠ WA includes combinations like (<span
+								style="color: red;">red</span>, <span style="color: green;">green</span>), (<span
+								style="color: green;">green</span>,
+							<span style="color: blue;">blue</span>),
+							etc.
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<img class="custom_image" src="images/australia_constraint_graph.svg"
+						style="width: 40%; height: auto;">
+
+
+					<h4>Constraint Graph and Solutions</h4>
+					<ul class="problem_tables" title="australia">
+						<li class="fragment">
+							Visualize CSP as a constraint graph: nodes are regions, edges represent constraints.</li>
+						<li class="fragment">
+							Example solution: {WA = <span style="color: red;">red</span>, NT = <span
+								style="color: green;">green</span>, Q = <span style="color: red;">red</span>, ...}.</li>
+						<li class="fragment">
+							Multiple solutions possible for this CSP.</li>
+					</ul>
+				</section>
+
+
+			</section>
+
+			<!-- Methods for Solving -->
+			<section data-background-color="white" data-background="images/bild.png" data-background-opacity="0.2">
+				<section data-auto-animate>
+					<h2>Solving Methods</h2>
+					<h3>Techniques for Solving CSPs</h3>
+					<ul style="font-size: 0.875em;">
+						<li class="fragment"><b>Backtracking:</b> Traditional technique for exhaustive search. Starts
+							with empty assignment</li>
+						<li class="fragment"><b>Local Search:</b> Complete assignment followed by updates one variable
+							at a time</li>
+						<li class="fragment"><b>Heuristic Methods:</b> <em>general</em> rather than domain-specific</li>
+					</ul>
+				</section>
+			</section>
+
+
+
+			<!-- Constraint Propagation (title) -->
+			<section data-background-color="white" data-background="images/constraint_propagation.png"
+				data-background-opacity="0.5">
+				<section data-auto-animate>
+					<h1 data-id="cp_header">Constraint Propagation</h1>
+				</section>
+				<section data-auto-animate>
+					<h1 data-id="cp_header" style="opacity: 0.4;">Constraint Propagation</h2>
+						<h3>Harnessing Constraints to Simplify Variable Choices and Optimize Search</h3>
+				</section>
+			</section>
+
+			<!-- Constraint Propagation (content) -->
+			<section data-background-color="white" data-background="images/constraint_propagation.png"
+				data-background-opacity="0.2">
+
+				<section>
+					<h2>Characteristics</h2>
+					<ul title="Constraint Propagation Characteristics">
+						<li class="fragment">Definition<span class="fragment fade-in-then-semi-out" id="description">
+								- Constraint propagation refers to the technique of reducing the search space in
+								problem-solving by applying constraints that must be met.</span></li>
+						<li class="fragment">Key Concept<span class="fragment fade-in-then-semi-out" id="description">
+								- involves updating the domain of variables when other variables' domains change.</span>
+						</li>
+						<li class="fragment">Importance<span class="fragment fade-in-then-semi-out" id="description">
+								- Essential for efficiently solving CSPs.</span></li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Consistency</h2>
+					<h3 class=fragment>The state where all constraints are satisfied without any conflicts</h3>
+					<ul style="font-size: 0.875em;" title="Consistency">
+						<li class="fragment"><b>Arc Consistency:</b> Every value in a variable's domain satisfies the
+							constraints with every value in the domains of connected variables.</li>
+						<li class="fragment" style="color: gray;"><b>Path Consistency:</b> Extends the concept of arc
+							consistency to consider sequences of variables.</li>
+						<li class="fragment" style="color: gray;"><b>K-Consistency:</b> A general form where consistency
+							is maintained across k variables.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Arc Consistency</h2>
+					<ul style="font-size: 0.8em;" title="Arc Consistency">
+						<li class="fragment fade-in-then-semi-out"><b>Definition:</b> a state in a CSP where every value
+							in a variable's
+							domain can be paired with some value in the
+							domain of every connected variable without violating any constraints.</li>
+						<li class="fragment fade-in-then-semi-out"><b>Application:</b> simplifies CSPs by iteratively
+							removing values
+							from variable domains that are inconsistent with constraints, hence reducing search
+							space.</li>
+						<li class="fragment fade-in-then-semi-out"><b>Algorithm:</b> AC-3, enforces consistency between
+							pairs of variables
+							until no more
+							inconsistencies are found.</li>
+						<li class="fragment"><b>Benefits:</b>
+							<ul style="font-size: 0.8em;">
+								<li class="fragment">reduces the
+									number of potential solutions to be examined</li>
+								<li class="fragment">helps in early detection of unsolvable
+									problems</li>
+
+							</ul>
+						</li>
+						<li class="fragment fade-up"><b>Limitations:</b> doesn't guarantee a solution; must (usually) be
+							used
+							in conjunction with other solving techniques.
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>AC-3 Example: The Weekly Allowance</h2>
+					<p class="fragment">Alice, Bruno, Chen, and Darya are set to receive their weekly allowance from
+						their
+						parents. Each
+						of them will receive an allowance of either 10, 20, 30, or 40 dollars.
+						<br>
+						Alice must receive a higher allowance than Bruno. However, Alice's allowance cannot
+						match or
+						exceed Chen's. Since Bruno and Darya are conjoined twins, they must receive the same
+						amount of
+						allowance.
+					</p>
+				</section>
+
+				<section data-transition="fade">
+					<p>Variables = { A, B, C, D }</p>
+				</section>
+
+				<section data-transition="fade">
+					<p>Domain = { 10, 20, 30, 40 }</p>
+				</section>
+
+				<section data-transition="fade">
+					<h3>Initial domain for each variable</h3>
+					<p>A = {10, 20, 30, 40}</p>
+					<p>B = {10, 20, 30, 40}</p>
+					<p>C = {10, 20, 30, 40}</p>
+					<p>D = {10, 20, 30, 40}</p>
+
+				</section>
+
+				<section data-transition="fade">
+					<h3>constraints</h3>
+					<p>C<sub>1</sub> = A &gt; B</p>
+					<p>C<sub>2</sub> = C &gt; A</p>
+					<p>C<sub>3</sub> = B == D</p>
+
+				</section>
+
+				<section data-transition="fade">
+					<h3>arcs from constraints</h3>
+					<ul class="fragment">
+						<li>A &gt; B</li>
+						<li>B &lt; A</li>
+						<li>C &gt; A</li>
+						<li>A &lt; C</li>
+						<li>B == D</li>
+						<li>D == B</li>
+					</ul>
+					<p class="fragment">...which is our <em>agenda</em></p>
+				</section>
+			</section>
+
+
+
+			<!-- Backtracking search (title) -->
+			<section data-background-color="white" data-background="images/backtracking_background.png"
+				data-background-opacity="1.0">
+				<section data-auto-animate>
+					<h1 data-id="backtrack_title" style="color: white; text-shadow: 9px -1px 13px black;">
+						Backtracking
+						Search for CSP</h1>
+				</section>
+			</section>
+
+			<!-- Backtracking search (content) -->
+			<section data-background-color="white" data-background="images/backtracking_background.png"
+				data-background-opacity="0.2">
+
+
+				<section data-auto-animate>
+					<h1 data-id="backtrack_title" style="color: black;">Backtracking Search for CSP</h1>
+					<ul>
+						<li class="fragment"><b>Definition:</b> A depth-first search approach for solving CSPs.</li>
+						<li class="fragment"><b>Basic Mechanism:</b> Systematic exploration by making and undoing
+							choices.</li>
+						<li class="fragment"><b>Key Feature:</b> Ability to backtrack upon reaching a dead end</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>The Backtracking Algorithm - Step by Step</h2>
+					<ul>
+						<li class="fragment"><b>Step 1:</b> Select an unassigned variable.</li>
+						<li class="fragment"><b>Step 2:</b> Assign a value from the variable's domain.</li>
+						<li class="fragment"><b>Step 3:</b> Check for consistency with constraints.</li>
+						<li class="fragment"><b>Step 4:</b> If constraints violated, backtrack and try another
+							value.
+						</li>
+
+					</ul>
+					<a class="fragment" href="https://www.brainbashers.com/queens.asp?size=6">Let's try it!</a>
+				</section>
+
+
+				<section>
+					<img class="custom_image" src="images/backtracking_flowchart.svg"
+						style="width: 100%; height: auto;">
+				</section>
+
+			</section>
+
+			<!-- Local Search for CSP (title)-->
+			<section data-background-color="white" data-background="images/local_search_background.png"
+				data-background-opacity="1.0">
+				<section data-auto-animate>
+					<h1 data-id="backtrack_title" style="color: white; text-shadow: 9px -1px 13px black;">
+						Local Search for CSP</h1>
+				</section>
+			</section>
+
+			<!-- Local Search for CSP (content)-->
+			<section data-background-color="white" data-background="images/local_search_background.png"
+				data-background-opacity="0.2">
+				<section data-auto-animate>
+					<h1 style="color: black;">Local Search for CSP</h1>
+					<ul>
+						<li class="fragment"><b>Definition:</b> A search method that explores the "neighborhood" of
+							solutions to find a satisfactory solution.</li>
+						<li class="fragment"><b>Characteristic:</b> Focuses on incrementally improving an existing
+							solution.</li>
+						<li class="fragment"><b>Usage:</b> Effective for large CSPs with many variables.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Basic Components</h2>
+					<ul>
+						<li class="fragment"><b>Initial State:</b> Starting point for the search, often a random
+							assignment.</li>
+						<li class="fragment"><b>Successor Function:</b> Generates "neighbors" of the current state.</li>
+						<li class="fragment"><b>Evaluation Function:</b> Assesses the quality of an assignment.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Examples of Algorithms</h2>
+					<ul>
+						<li class="fragment"><b>Hill Climbing:</b> Moves only towards better states.</li>
+						<li class="fragment"><b>Simulated Annealing:</b> Allows temporary deteriorations to avoid local
+							maxima.</li>
+						<li class="fragment"><b>Tabu Search:</b> Uses memory to avoid previously explored states.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Min-Conflict Heuristic</h2>
+					<ul>
+						<li class="fragment"><b>Overview:</b> A heuristic for efficiently finding solutions in large
+							CSPs.</li>
+						<li class="fragment"><b>Strategy:</b> Focuses on minimizing the number of conflicts in the
+							current assignment.</li>
+						<li class="fragment"><b>Process:</b> Iteratively selects a conflicted variable and changes its
+							value to reduce conflicts.</li>
+						<li class="fragment"><b>Advantage:</b> Often converges quickly to a solution, especially useful
+							in problems with a large search space.</li>
+					</ul>
+				</section>
+
+				<section>
+					<img class="custom_image" src="images/min_conflict_flowchart.svg"
+						style="width: 100%; height: auto;">
+				</section>
+
+			</section>
 		</div>
+	</div>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script src="plugin/zoom/zoom.js"></script>
+
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
+
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealZoom, RevealMarkdown, RevealHighlight, RevealNotes],
+
+		});
+		Reveal.configure({ progress: false });
+		Reveal.configure({ pdfSeparateFragments: false });
+
+	</script>
+
+</body>
+
 </html>
