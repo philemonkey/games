@@ -19,461 +19,651 @@
 	<div class="reveal">
 		<div class="slides">
 
-			<!-- Title Slide -->
-			<section data-background-color="white" data-background="images/bild.png" data-background-opacity="0.5"
-				data-auto-animate>
-				<h1>CONSTRAINT SATISFACTION PROBLEMS</h1>
+
+
+			<!-- Intro -->
+			<section data-background-color="white" data-background="images/games.png" data-background-opacity="0.2">
+
+				<section data-auto-animate data-background="images/games.png" data-background-opacity="0.6">
+					<h1 data-id="decision strategies header"
+						style="color: rgb(255, 255, 255); text-shadow: 9px -1px 13px black;">adversarial search and games</h1>
+				</section>
+
+				<section data-auto-animate data-auto-animate-duration="2.0">
+					<h1 data-id="decision strategies header" style="color: black;">adversarial search and games</h1>
+					<h2>Strategies and Tactics in Competitive Game Playing</h2>
+				</section>
+
 			</section>
 
-			<!-- Title Slide -->
-			<section data-background-color="white" data-background="images/bild.png" data-background-opacity="0.5"
-				data-auto-animate>
-				<h1>CONSTRAINT SATISFACTION PROBLEMS</h1>
-				<h2 style="opacity: 0.0;">Breaking Open the Black Box:</h2>
-				<h3 style="opacity: 0.0;">Factored Representations and General Heuristics</h3>
-			</section>
+			<!-- Zero-sum games -->
+			<section data-background-color="white" data-background="images/zero_sum.png" data-background-opacity="0.2">
 
-			<!-- Title with Subtitle -->
-			<section data-background-color="white" data-background="images/bild.png" data-background-opacity="0.5"
-				data-auto-animate data-auto-animate-duration="3.0">
-				<h1>CONSTRAINT SATISFACTION PROBLEMS</h1>
-				<h2 style="opacity: 1.0;">Breaking Open the Black Box:</h2>
-				<h3 style="opacity: 1.0;">Factored Representations and General Heuristics</h3>
-			</section>
+				<section data-auto-animate data-background="images/zero_sum.png" data-background-opacity="0.6">
+					<h1 data-id="decision strategies header"
+						style="color: rgb(255, 255, 255); text-shadow: 9px -1px 13px black;">zero-sum games</h1>
+				</section>
 
-
-			<!-- Definition and Explanation -->
-			<section data-background-color="white" data-background="images/bild.png" data-background-opacity="0.2">
-
-				<section>
-					<h2>Defining Constraint Satisfaction Problems</h2>
-					<h3>Components of CSP</h3>
-					<ul>
-						<li class="fragment"><b>Variables:</b> Elements that need to be assigned</li>
-						<li class="fragment"><b>Domains:</b> Possible values that variables can take</li>
-						<li class="fragment"><b>Constraints:</b> Rules that restrict combinations of values</li>
-					</ul>
+				<section data-auto-animate data-auto-animate-duration="2.0">
+					<h1 data-id="decision strategies header" style="color: black;">zero-sum games</h1>
+					<p>Or rather deterministic, two-player, turn-taking, perfect information, zero-sum games.</p>
 				</section>
 
 				<section>
-					<h2>Variables</h2>
-					<ul>
-						<li class="fragment">Representation: X = { X<sub>1</sub>, X<sub>2</sub>, ..., X<sub>n</sub> }
-						</li>
-						<li class="fragment">Role: Decision elements in state space</li>
-						<li class="fragment">Example: In the cryptarithmetic puzzle TWO + TWO = FOUR, the variables are
-							X
-							= { <em>F, T, U, W, R, O</em> }
-						</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>Domains</h2>
-					<ul>
-						<li class="fragment">Representation: D = { D<sub>1</sub>, D<sub>2</sub>, ..., D<sub>n</sub> }
-						</li>
-						<li class="fragment">Role: Value sets for variables</li>
-						<li class="fragment">Example: D<sub>digits</sub> = { 0, 1, ..., 8, 9 }</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>Constraints</h2>
-					<ul>
-						<li class="fragment">Representation: C = { C<sub>1</sub>, C<sub>2</sub>, ..., C<sub>m</sub> }
-						</li>
-						<li class="fragment">Role: Rules or equations to be satisfied</li>
-						<li class="fragment">Example: C<sub>1</sub> = <em>O</em> + <em>O</em> = <em>R</em> + 10 &#215;
-							<em>y</em><sub>1</sub> (<em>y</em><sub>1</sub>: auxiliary variable carry-over).
-						</li>
-					</ul>
-				</section>
-
-				<section data-auto-animate>
-					<h2>Example: Sudoku</h2>
-					<p>Variables: 81 cells, represented as x<sub>i, j</sub> where 1 &le; i, j &le;9</p>
-
-					<p>Each cell in the Sudoku grid is a variable. The grid has 9 rows and 9 columns,
-						making for 81 cells in total. x<sub>i, j</sub> represents the cell at the i-th row
-						and j-th column.</p>
-				</section>
-
-				<section data-auto-animate>
-					<h2>Example: Sudoku</h2>
-					<p>Domains: { 1, 2, 3, ..., 9 }</p>
-
-					<p>Each cell can contain a digit from 1 to 9, so the domain for each variable is { 1,
-						2, 3, ..., 9 }.</p>
-				</section>
-
-				<section data-auto-animate>
-					<h2>Example: Sudoku</h2>
-					<p>Constraints: </p>
+					<h2>Zero-Sum Games in AI</h2>
 					<ul style="font-size: 0.8em;">
-						<li>
-							1. For all <em>i</em>, <em>j</em>, <em>k</em> where <em>j</em> &ne; <em>k</em>:
-							<br>
-							<em>C</em><sub>1</sub>: <em>x</em><sub><em>i,j</em></sub> &ne;
-							<em>x</em><sub><em>i,k</em></sub>
-						</li>
-						<li>
-							2. For all <em>j</em>, <em>i</em>, <em>k</em> where <em>i</em> &ne; <em>k</em>:
-							<br>
-							<em>C</em><sub>2</sub>: <em>x</em><sub><em>i,j</em></sub> &ne;
-							<em>x</em><sub><em>k,j</em></sub>
-						</li>
-						<li>
-							3. For all <em>a</em>, <em>b</em> in {1, 4, 7} and for all <em>i, j</em> in {<em>a,
-								a+1, a+2</em>} &times; {<em>b, b+1, b+2</em>} where (<em>i, j</em>) &ne; (<em>k,
-								l</em>):
-							<br>
-							<em>C</em><sub>3</sub>: <em>x</em><sub><em>i,j</em></sub> &ne;
-							<em>x</em><sub><em>k,l</em></sub>
-						</li>
-					</ul>
+						<li class="fragment"><b>Definition:</b> Zero-sum games are scenarios where gains for one player
+							equate to losses for the other.</li>
 
-					<p style="font-size: 0.8em;">The constraints ensure that each row, each column, and each of the nine
-						3x3 boxes
-						must contain all of the digits from 1 to 9.</p>
+					</ul>
 				</section>
 
-			</section>
-
-
-			<!-- Another Example: Australia -->
-			<section data-background-color="white" data-background="images/coloring_australia_background.png"
-				data-background-opacity="0.2">
 				<section>
-					<h1>Example: Australia Map-Coloring</h1>
-				</section>
-
-				<section data-auto-animate>
-					<img data-id="australia_pic" class="custom_image" src="images/australia_clean.png"
-						style="width: 40%; height: auto;">
-
-					<h4>Australia Map-Coloring: Overview</h4>
-					<ul class="problem_tables" title="australia">
-						<li class="fragment">Task
-							- Color each state/territory in Australia with <span style="color: red;">red</span>,
-							<span style="color: green;">green</span>, or <span style="color: blue;">blue</span>.
+					<h2>Elements</h2>
+					<ul style="font-size: 0.8em;">
+						<li class="fragment"><b>S<sub>0</sub> (Initial State): </b> Sets up the game at the start.</li>
+						<li class="fragment"><b>TO-MOVE(<em>s</em>): </b> Identifies which player is to move in state
+							<em>s</em>.
 						</li>
-
-						<li class="fragment">No two neighboring regions should have the same color.</li>
-					</ul>
-				</section>
-
-				<section data-auto-animate>
-					<img data-id="australia_pic" class="custom_image" src="images/australia_clean.png"
-						style="width: 40%; height: auto;">
-
-
-					<h4>Variables and Domains in the CSP</h4>
-					<ul class="problem_tables" title="australia">
-						<li class="fragment">Variables - Regions of Australia (WA, NT, Q, NSW, V, SA, T).</li>
-						<li class="fragment">Domain for each variable - {<span style="color: red;">red</span>, <span
-								style="color: green;">green</span>, <span style="color: blue;">blue</span>}.</li>
-					</ul>
-				</section>
-
-				<section data-auto-animate>
-					<img data-id="australia_pic" class="custom_image" src="images/australia_clean.png"
-						style="width: 40%; height: auto;">
-
-
-					<h4>Constraints in the Australia CSP</h4>
-					<ul class="problem_tables" title="australia">
-						<li class="fragment">
-							Neighboring regions must have distinct colors.</li>
-						<li class="fragment">
-							Nine specific constraints between neighboring regions (e.g., SA ≠ WA).</li>
-						<li class="fragment">
-							Example of a constraint: SA ≠ WA includes combinations like (<span
-								style="color: red;">red</span>, <span style="color: green;">green</span>), (<span
-								style="color: green;">green</span>,
-							<span style="color: blue;">blue</span>),
-							etc.
+						<li class="fragment"><b>ACTIONS(<em>s</em>): </b> The set of legal moves in state <em>s</em>.
+						</li>
+						<li class="fragment"><b>RESULT(<em>s</em>, <em>a</em>): </b> Defines the state resulting from
+							taking action <em>a</em> in state <em>s</em>.</li>
+						<li class="fragment"><b>IS-TERMINAL(<em>s</em>): </b> A test to determine if the game is over.
 						</li>
 					</ul>
 				</section>
 
 				<section>
-					<img class="custom_image" src="images/australia_constraint_graph.svg"
-						style="width: 40%; height: auto;">
-
-
-					<h4>Constraint Graph and Solutions</h4>
-					<ul class="problem_tables" title="australia">
-						<li class="fragment">
-							Visualize CSP as a constraint graph: nodes are regions, edges represent constraints.</li>
-						<li class="fragment">
-							Example solution: {WA = <span style="color: red;">red</span>, NT = <span
-								style="color: green;">green</span>, Q = <span style="color: red;">red</span>, ...}.</li>
-						<li class="fragment">
-							Multiple solutions possible for this CSP.</li>
-					</ul>
-				</section>
-
-
-			</section>
-
-			<!-- Methods for Solving -->
-			<section data-background-color="white" data-background="images/bild.png" data-background-opacity="0.2">
-				<section data-auto-animate>
-					<h2>Solving Methods</h2>
-					<h3>Techniques for Solving CSPs</h3>
-					<ul style="font-size: 0.875em;">
-						<li class="fragment"><b>Backtracking:</b> Traditional technique for exhaustive search. Starts
-							with empty assignment</li>
-						<li class="fragment"><b>Local Search:</b> Complete assignment followed by updates one variable
-							at a time</li>
-						<li class="fragment"><b>Heuristic Methods:</b> <em>general</em> rather than domain-specific</li>
+					<h2>Outcomes and Utility in Zero-Sum Games</h2>
+					<ul style="font-size: 0.8em;">
+						<li class="fragment"><b>UTILITY(s, p): </b> Assigns numeric value to a player at game end (e.g.,
+							1 for win, 0 for loss, 0.5 for draw in chess).</li>
+						<li class="fragment"><b>Game Tree: </b> Represents all possible move sequences to terminal
+							states.</li>
+						<li class="fragment"><b>Complexity Range: </b> From simpler games like tic-tac-toe to complex
+							ones like chess.</li>
+						<li class="fragment">(Tic-tac-toe = 9! states = 362,880 states)</li>
+						<li class="fragment">(Chess ≈ 10⁴⁰ states)</li>
 					</ul>
 				</section>
 			</section>
 
+			<!-- Minimax-->
+			<section data-background-color="white" data-background="images/minimax.png" data-background-opacity="0.2">
 
-
-			<!-- Constraint Propagation (title) -->
-			<section data-background-color="white" data-background="images/constraint_propagation.png"
-				data-background-opacity="0.5">
-				<section data-auto-animate>
-					<h1 data-id="cp_header">Constraint Propagation</h1>
+				<section data-auto-animate data-background="images/minimax.png" data-background-opacity="0.6">
+					<h1 data-id="decision strategies header"
+						style="color: rgb(255, 255, 255); text-shadow: 9px -1px 13px black;">Minimax</h1>
 				</section>
-				<section data-auto-animate>
-					<h1 data-id="cp_header" style="opacity: 0.4;">Constraint Propagation</h2>
-						<h3>Harnessing Constraints to Simplify Variable Choices and Optimize Search</h3>
-				</section>
-			</section>
 
-			<!-- Constraint Propagation (content) -->
-			<section data-background-color="white" data-background="images/constraint_propagation.png"
-				data-background-opacity="0.2">
+				<section data-auto-animate data-auto-animate-duration="2.0">
+					<h1 data-id="decision strategies header" style="color: black;">Minimax</h1>
+					<h2>Mastering the Art of Predictive Conquest</h2>
+				</section>
 
 				<section>
-					<h2>Characteristics</h2>
-					<ul title="Constraint Propagation Characteristics">
-						<li class="fragment">Definition<span class="fragment fade-in-then-semi-out" id="description">
-								- Constraint propagation refers to the technique of reducing the search space in
-								problem-solving by applying constraints that must be met.</span></li>
-						<li class="fragment">Key Concept<span class="fragment fade-in-then-semi-out" id="description">
-								- involves updating the domain of variables when other variables' domains change.</span>
+					<h2>Understanding Minimax</h2>
+					<ul style="font-size: 0.8em;">
+						<li class="fragment">Minimax is a decision rule used in decision-making processes and games,
+							aiming
+							to minimize the possible loss for a worst-case scenario.</li>
+						<li class="fragment">Used extensively in two-player, turn-based games, it considers all possible
+							moves and their outcomes to make the optimal choice.</li>
+						<li class="fragment">Minimax evaluates the game state by assuming that the opponent will also
+							play
+							optimally.</li>
+					</ul>
+				</section>
+
+				<section>
+
+					<div class="mxgraph" style="max-width:100%;border:1px solid transparent;"
+						data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;nav&quot;:true,&quot;resize&quot;:true,&quot;page&quot;:0,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;&lt;mxfile host=\&quot;Electron\&quot; modified=\&quot;2023-12-01T13:25:18.612Z\&quot; agent=\&quot;5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/16.5.1 Chrome/96.0.4664.110 Electron/16.0.7 Safari/537.36\&quot; etag=\&quot;6Ur0voeBuF698uhgcoTm\&quot; version=\&quot;16.5.1\&quot; type=\&quot;device\&quot; pages=\&quot;2\&quot;&gt;&lt;diagram id=\&quot;LNKZdOM3rQyFJnURe1XQ\&quot; name=\&quot;Page-1\&quot;&gt;7Vxtk6I4EP41fHQLEgL4cdXd2arbrdkt9+ru9stVlIwwg8TFOOr9+gsQFAwyuMjLiuNUYZpAkn4eOkl3owLHy91DgFfOF2oTTwGqvVPgRAEAqpbFD6FkH0s0CLVYsghcW8iOgqn7HxFCVUg3rk3WmYqMUo+5q6xwTn2fzFlGhoOAbrPVnqiXbXWFF0QSTOfYk6V/uTZzYulQVY/yT8RdOEnLRnJmiZPKQrB2sE23KRH8oMBxQCmLvy13Y+KF2kv0El/3MT5LZ8/h8IDq4RnXcVRhhtfkXxYQEjfgOKJBxw4/sTC5GYMPy+9o4P34QSdT+mX32R1NBjEW2dZXOCA+y+kB/yI6kd/dxadH8M3Zkp/Lr9/+WD4+zAYvaKAZYvBsn2g0oBvfJuFFqgJHNGAOXVAfe58pXXGhxoXPhLG94ALeMMpFDlt64izvXrD/O134R9wsKkx2mdJelNYsoC8HDCGXxD0jtkSAowIKtMbHRDfBnBQNXvAVBwvCCuqBFAoPhC4J7ze/LiAeZu5rtndY8HlxqJdBSKByCUKmhFCokqko+tTnh9H1QFNvBDTYKmjxfV+xtxEtySB6HreRIXZbx2VkusLRsLfcTmeRwetVbDif3F2I8InS9YPSX0nAyO5X1C6rKZkghsI4iukBieL2aGotIXJSVjaRXV+vViMPQwu0BiVpjVql9bDv6tfbVD9o1qo8uZ43ph4NoltDQws/oZz6LCX/GP0JucBUV+u0ShrMWiWgtmyWDkvIhubori+sYMmnyWj1adIaAa3D6jfbVD+8G7PoGgN1zZjpt/pc6CWfC03NR6whu4R6r/8zT0wz+tebNUy1GRZgZA0LbHvzlqfI2yA2Kklsq1W7Avuu/mE96v9zTYLHHPdvfKNCTNK7eYHhb2Nm6jcrvJjS7SVUl73aN0J1o+wU2qrPGjTts34HND2zJ36ngje2xVHpKwlcPmQSKK3tlUsj2qpD27iRRRECXVsU3axH2yxL7HZ9qjfr0i6t/1ZDCuaNGBbT6phhsSTFDupVbWc9bAMDZaBBbXvYhhI0OS63PiDTNWCSpKYUMjk7iT4gow27Bo2cUtFTcwZB16AB8lSTs6rtAzY66ho2cphtkBNf6AM2yOoaNnKkISck3QdoTK1r0CAZmp5iY+mNYVPsSPdc/yUu25hhBb7Hc+ZSn9/jeR0exorJtWD83IQJ26P45Poo4BcoaJSpw+hiwbHMVEmfn/OeyXc4lPPTGtTUBWiimNF//CUaRnFSRNrJV29A4IRwNiKWrR9qps5YYAYNo9YNmn6yd7ZkioEcioHLKZYTUrgF1umgEuuaC0N1iHXgZB19Z93FrNMrsc7oI+t06866iqwzK7HO7CPrTP3OumqsQ9XWdVYfWXfiQwTwTroLSVdtWTfsI+kM7c66iqyrtKzT1T6yDp44fhudX/PePV/inVbGRuSgJb9hrr66a3eWQFj9rXMoB3NqjoD+irfsbYU1mg1ZMntdDsZwKgB5dG8iW7I9OcBQc8j0alDGqjrvH+ha/rwuxws4tLA+aGUneN2xo+theyaprKtpgLqcB8Wx1evDVk4PqjvAcT1sz7y32NVMrKT9NLaunzPaK2GLGp9dm4hdFaj2fBZL114URzmzs+vXNzuj2wz/F+i2INesa1zInc5RfVyQp/PfZdGNimfz5n6lhhePPwgWnUv9rhr88D8=&lt;/diagram&gt;&lt;diagram id=\&quot;eTBQ08o01XHY-1VRSB1a\&quot; name=\&quot;Page-2\&quot;&gt;ldFPD4IgFADwT8OxDWFZHZuZbdXJzbZuTEjY0OeQpvXps6EZ81InHj8e7/EH0ajsEsNqeQYuNCKYd4juECFBgEk/vOXhZB0uHRRG8SFpglQ9xYB40LviovESLYC2qvYxh6oSufWMGQOtn3YD7XetWSFmkOZMz/WiuJVONxhPfhCqkGPncFwp2Zg8QCMZh/aLaIxoZACsi8ouEvr9eOO7POnpzJtsdcqOCemuW56xauGK7f/Z8rmCEZX9tXQfTEfrJ94H0/gF&lt;/diagram&gt;&lt;/mxfile&gt;&quot;}">
+					</div>
+					<script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
+				</section>
+
+				<section>
+					<h2>Transition to Alpha-Beta Pruning</h2>
+					<ul style="font-size: 0.8em;">
+						<li class="fragment">Alpha-Beta Pruning is an enhancement of the Minimax algorithm. It reduces
+							the
+							number of nodes evaluated in the search tree.</li>
+						<li class="fragment">By "pruning" branches that will not influence the final decision, it speeds
+							up
+							the calculation without affecting the outcome.</li>
+						<li class="fragment">Alpha and Beta represent the minimum and maximum scores in the branches
+							being
+							evaluated.</li>
+					</ul>
+				</section>
+
+				<section>
+					<div class="mxgraph" style="max-width:100%;border:1px solid transparent;"
+						data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;nav&quot;:true,&quot;resize&quot;:true,&quot;page&quot;:0,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;&lt;mxfile host=\&quot;Electron\&quot; modified=\&quot;2023-12-01T15:47:14.506Z\&quot; agent=\&quot;5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/16.5.1 Chrome/96.0.4664.110 Electron/16.0.7 Safari/537.36\&quot; etag=\&quot;rKUDwo3EqeYJK-sVuy_S\&quot; version=\&quot;16.5.1\&quot; type=\&quot;device\&quot; pages=\&quot;2\&quot;&gt;&lt;diagram id=\&quot;LNKZdOM3rQyFJnURe1XQ\&quot; name=\&quot;Page-1\&quot;&gt;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&lt;/diagram&gt;&lt;diagram id=\&quot;eTBQ08o01XHY-1VRSB1a\&quot; name=\&quot;Page-2\&quot;&gt;ldFPD4IgFADwT8OxjWDZOjYz29KTm23dmJCyoc8hTfPTp0Mz5qVOPH483uMPon7ZhZrVRQxcKEQw7xA9IUII9sgwjPKysiVkZyXXkk+2QCJ7MSGe9Cm5aJxEA6CMrF3MoKpEZhxjWkPrpj1AuV1rlosVJBlTa71JbgqrB4wXvwiZF3Nnb14p2Zw8QVMwDu0X0QBRXwMYG5WdL9T4evO79DSKeZPuo/Qaku5+5CmrNrbY+Z8tnytoUZlfSw/BcrRh4vwwDd4=&lt;/diagram&gt;&lt;/mxfile&gt;&quot;}">
+					</div>
+					<script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
+
+				</section>
+
+				<section>
+					<h2>Utility and Evaluation</h2>
+					<ul style="font-size: 0.8em;">
+						<li class="fragment">A full Minimax calculation, which relies on Utility, is often
+							computationally
+							impractical due to the enormous number of possible game states.</li>
+						<li class="fragment">Instead, we cut off the algorithm at a given depth and use an
+							<em>Evaluation function</em>, which provides a heuristic
+							assessment of the game state's value.
 						</li>
-						<li class="fragment">Importance<span class="fragment fade-in-then-semi-out" id="description">
-								- Essential for efficiently solving CSPs.</span></li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>Consistency</h2>
-					<h3 class=fragment>The state where all constraints are satisfied without any conflicts</h3>
-					<ul style="font-size: 0.875em;" title="Consistency">
-						<li class="fragment"><b>Arc Consistency:</b> Every value in a variable's domain satisfies the
-							constraints with every value in the domains of connected variables.</li>
-						<li class="fragment" style="color: gray;"><b>Path Consistency:</b> Extends the concept of arc
-							consistency to consider sequences of variables.</li>
-						<li class="fragment" style="color: gray;"><b>K-Consistency:</b> A general form where consistency
-							is maintained across k variables.</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>Arc Consistency</h2>
-					<ul style="font-size: 0.8em;" title="Arc Consistency">
-						<li class="fragment fade-in-then-semi-out"><b>Definition:</b> a state in a CSP where every value
-							in a variable's
-							domain can be paired with some value in the
-							domain of every connected variable without violating any constraints.</li>
-						<li class="fragment fade-in-then-semi-out"><b>Application:</b> simplifies CSPs by iteratively
-							removing values
-							from variable domains that are inconsistent with constraints, hence reducing search
-							space.</li>
-						<li class="fragment fade-in-then-semi-out"><b>Algorithm:</b> AC-3, enforces consistency between
-							pairs of variables
-							until no more
-							inconsistencies are found.</li>
-						<li class="fragment"><b>Benefits:</b>
-							<ul style="font-size: 0.8em;">
-								<li class="fragment">reduces the
-									number of potential solutions to be examined</li>
-								<li class="fragment">helps in early detection of unsolvable
-									problems</li>
-
+						<li class="fragment">Evaluation rules:
+							<ul style="font-size: 0.9em;">
+								<li class="fragment">Should reflect the strategic value of a game state.</li>
+								<li class="fragment">Need to be computationally efficient (even more in the case of
+									real-time decision-making).</li>
+								<li class="fragment">Must be balanced to avoid biased assessments of the game state.
+								</li>
 							</ul>
 						</li>
-						<li class="fragment fade-up"><b>Limitations:</b> doesn't guarantee a solution; must (usually) be
-							used
-							in conjunction with other solving techniques.
+					</ul>
+				</section>
+
+				<section>
+					<h3>estimated utility ≈ actual utility</h3>
+					<h3>estimated utility ≠ actual utility</h3>
+					<div class="r-stack">
+						<img class="fragment" data-fragment-index="0" src="images/minimax_utility.svg"
+							style="width: 200%; height: auto;">
+						<img class="fragment" data-fragment-index="1" src="images/minimax_utility2.svg"
+							style="width: 200%; height: auto;">
+					</div>
+				</section>
+
+
+				<section>
+					<h2>Enhancements to Minimax</h2>
+					<ul style="font-size: 0.8em;">
+						<li class="fragment"><b>Iterative Deepening: </b>conducting successive Minimax searches at
+							increasing depths.
+							<ul style="font-size: 0.9em;">
+								<li class="fragment">Starts with a shallow searchand progressively deepens</li>
+								<li class="fragment">May use earlier results to guide deeper analysis</li>
+								<li class="fragment">Very adaptive to varying time constraints</li>
+							</ul>
+						</li>
+						<li class="fragment"><b>Quiescence Search: </b>Extends the search in volatile positions to avoid
+							the 'horizon effect' - situations where a significant change in the game is just beyond the
+							current search limit.</li>
+
+						<li class="fragment"><b>Forward Pruning: </b>Early elimination of obviously inferior moves to
+							increase search efficiency. Should be used cautiously to avoid missing key moves that could
+							be valuable in a deeper analysis."</li>
+
+					</ul>
+				</section>
+			</section>
+
+
+			<!-- MCTS part 1 -->
+			<section data-background-color="white" data-background="images/mcts1.png" data-background-opacity="0.2">
+
+				<section data-auto-animate data-background="images/mcts1.png" data-background-opacity="0.6">
+					<h1 data-id="decision strategies header"
+						style="color: rgb(255, 255, 255); text-shadow: 9px -1px 13px black;">Monte Carlo Tree Search
+					</h1>
+				</section>
+
+				<section data-auto-animate data-auto-animate-duration="2.0">
+					<h1 data-id="decision strategies header" style="color: black;">Monte Carlo Tree Search</h1>
+					<h2>part 1</h2>
+				</section>
+
+				<section>
+					<h2>Overview</h2>
+					<ul style="font-size: 0.8em;">
+						<li class="fragment">Monte Carlo Tree Search (MCTS) is an algorithm for making decisions in
+							scenarios that can be represented as a tree of choices.
+						</li>
+						<li class="fragment">It intelligently searches through this tree to identify the most promising
+							moves by simulating potential future events.
+						</li>
+						<li class="fragment">MCTS is commonly used in games and situations where analyzing every
+							possible move is impractical due to their vast number.
 						</li>
 					</ul>
 				</section>
 
 				<section>
-					<h2>AC-3 Example: The Weekly Allowance</h2>
-					<p class="fragment">Alice, Bruno, Chen, and Darya are set to receive their weekly allowance from
-						their
-						parents. Each
-						of them will receive an allowance of either 10, 20, 30, or 40 dollars.
-						<br>
-						Alice must receive a higher allowance than Bruno. However, Alice's allowance cannot
-						match or
-						exceed Chen's. Since Bruno and Darya are conjoined twins, they must receive the same
-						amount of
-						allowance.
-					</p>
-				</section>
-
-				<section data-transition="fade">
-					<p>Variables = { A, B, C, D }</p>
-				</section>
-
-				<section data-transition="fade">
-					<p>Domain = { 10, 20, 30, 40 }</p>
-				</section>
-
-				<section data-transition="fade">
-					<h3>Initial domain for each variable</h3>
-					<p>A = {10, 20, 30, 40}</p>
-					<p>B = {10, 20, 30, 40}</p>
-					<p>C = {10, 20, 30, 40}</p>
-					<p>D = {10, 20, 30, 40}</p>
-
-				</section>
-
-				<section data-transition="fade">
-					<h3>constraints</h3>
-					<p>C<sub>1</sub> = A &gt; B</p>
-					<p>C<sub>2</sub> = C &gt; A</p>
-					<p>C<sub>3</sub> = B == D</p>
-
-				</section>
-
-				<section data-transition="fade">
-					<h3>arcs from constraints</h3>
-					<ul class="fragment">
-						<li>A &gt; B</li>
-						<li>B &lt; A</li>
-						<li>C &gt; A</li>
-						<li>A &lt; C</li>
-						<li>B == D</li>
-						<li>D == B</li>
-					</ul>
-					<p class="fragment">...which is our <em>agenda</em></p>
-				</section>
-			</section>
+					<h2>Procedure</h2>
+					<table>
+						<tr>
+							<!-- First Column for bullet points -->
+							<td>
+								<ul style="font-size: 0.75em;">
+									<li class="fragment" data-fragment-index="1"><b>Selection:</b> Choose a node based
+										on a selection policy until a node with potential moves is reached.</li>
+									<li class="fragment" data-fragment-index="2"><b>Expansion:</b> Add one or more new
+										child nodes to the tree from the selected node.</li>
+									<li class="fragment" data-fragment-index="3"><b>Simulation:</b> Play out a
+										hypothetical game from the new node to a conclusion.</li>
+									<li class="fragment" data-fragment-index="4"><b>Backpropagation:</b> Update the
+										nodes with the results of the simulation to inform future selections.</li>
+								</ul>
+							</td>
+							<!-- Second Column for images 1 and 2 -->
+							<td style="vertical-align: top;">
+								<img class="fragment custom longfade" data-fragment-index="1" data-id="selection_img"
+									src="images/selection.svg" style="width: 100%; height: auto;">
+								<img class="fragment custom longfade" data-fragment-index="2" data-id="expansion_img"
+									src="images/expansion.svg" style="width: 100%; height: auto;">
+							</td>
+							<!-- Third Column for images 3 and 4 -->
+							<td style="vertical-align: top;">
+								<img class="fragment custom longfade" data-fragment-index="3" data-id="simulation_img"
+									src="images/simulation.svg" style="width: 100%; height: auto;">
+								<img class="fragment custom longfade" data-fragment-index="4"
+									data-id="backpropagation_img" src="images/backpropagation.svg"
+									style="width: 100%; height: auto;">
+							</td>
+						</tr>
+					</table>
 
 
-
-			<!-- Backtracking search (title) -->
-			<section data-background-color="white" data-background="images/backtracking_background.png"
-				data-background-opacity="1.0">
-				<section data-auto-animate>
-					<h1 data-id="backtrack_title" style="color: white; text-shadow: 9px -1px 13px black;">
-						Backtracking
-						Search for CSP</h1>
-				</section>
-			</section>
-
-			<!-- Backtracking search (content) -->
-			<section data-background-color="white" data-background="images/backtracking_background.png"
-				data-background-opacity="0.2">
-
-
-				<section data-auto-animate>
-					<h1 data-id="backtrack_title" style="color: black;">Backtracking Search for CSP</h1>
-					<ul>
-						<li class="fragment"><b>Definition:</b> A depth-first search approach for solving CSPs.</li>
-						<li class="fragment"><b>Basic Mechanism:</b> Systematic exploration by making and undoing
-							choices.</li>
-						<li class="fragment"><b>Key Feature:</b> Ability to backtrack upon reaching a dead end</li>
-					</ul>
 				</section>
 
 				<section>
-					<h2>The Backtracking Algorithm - Step by Step</h2>
+					<h2>Historical Context</h2>
+
+					<table>
+						<tr>
+							<td style="width: 60%;">
+								<ul style="font-size: 0.7em;">
+									<li class="fragment" data-fragment-index="1"><b>Origin:</b> Emerged in the early
+										21st century for more efficient
+										decision-making processes in complex scenarios where traditional methods, like
+										Minimax, were
+										inadequate.
+									</li>
+									<li class="fragment" data-fragment-index="2"><b>Prominence in Gaming:</b> Gained
+										worldwide attention through its
+										application in the game of Go, particularly the AlphaGo computer program.
+										AlphaGo,
+										developed by DeepMind, used MCTS as part of its algorithmic structure to defeat
+										world
+										champion Go players.
+									</li>
+								</ul>
+							</td>
+							<td style="vertical-align: top;">
+								<img class="fragment custom longfade" data-fragment-index="2" data-id="go"
+									src="images/go_board.jpeg" style="width: 100%; height: auto;">
+
+
+							</td>
+						</tr>
+					</table>
+				</section>
+
+			</section>
+
+
+
+			<!-- Monte Carlo Method -->
+			<section data-background-color="white" data-background="images/monte_carlo_casino.png"
+				data-background-opacity="0.2">
+
+
+				<section data-auto-animate data-background="images/monte_carlo_casino.png"
+					data-background-opacity="0.6">
+					<h1 data-id="decision strategies header"
+						style="color: rgb(255, 255, 255); text-shadow: 9px -1px 13px black;">Monte Carlo Method</h1>
+				</section>
+
+				<section data-auto-animate data-auto-animate-duration="2.0">
+					<h1 data-id="decision strategies header" style="color: black;">Monte Carlo Method</h1>
+					<h2>randomness as a guide</h2>
+				</section>
+
+				<section data-auto-animate>
+					<h1 data-id="decision strategies header" style="font-size: 1.5em;">Monte Carlo Method</h1>
+					<h3>Definition</h3>
 					<ul>
-						<li class="fragment"><b>Step 1:</b> Select an unassigned variable.</li>
-						<li class="fragment"><b>Step 2:</b> Assign a value from the variable's domain.</li>
-						<li class="fragment"><b>Step 3:</b> Check for consistency with constraints.</li>
-						<li class="fragment"><b>Step 4:</b> If constraints violated, backtrack and try another
-							value.
+						<li class="fragment">Computational technique that uses random
+							sampling to approximate complex mathematical or physical systems.
+						</li>
+						<li class="fragment">Useful in scenarios where analytical solutions are either impossible or
+							difficult to obtain.
+						</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate class="custom section">
+					<h1 data-id="decision strategies header" style="font-size: 1.5em;">Monte Carlo Method</h1>
+					<h3>Historical Background</h3>
+					<table>
+						<tr>
+							<td>
+								<ul style="font-size: 0.875em;">
+									<li class="fragment" data-fragment-index="1">Named after the Monte Carlo Casino in
+										Monaco.</li>
+									<li class="fragment" data-fragment-index="2">Developed during the Manhattan Project
+										at the Los Alamos Laboratory.</li>
+									<li class="fragment" data-fragment-index="3">Initially used for neutron diffusion
+										and other physical processes where direct analytical solutions were unfeasible.
+									</li>
+								</ul>
+							</td>
+							<td style="vertical-align: middle;">
+								<p class="fragment custom longfade" data-fragment-index="2" style="font-size: 0.3em;">J.
+									Robert Oppenheimer (left) and John von Neumann.
+									The latter played a pivotal role in the development of the Monte Carlo Method.
+								</p>
+								<img class="fragment custom longfade" data-fragment-index="2" data-id="neumann"
+									src="images/Oppenheimer_and_Neumann.jpg" style="width: 100%; height: auto;">
+
+
+							</td>
+						</tr>
+					</table>
+				</section>
+
+				<section data-auto-animate>
+					<h1 data-id="decision strategies header" style="font-size: 1.5em;">Monte Carlo Method</h1>
+					<h3>Applications</h3>
+					<ul>
+						<li class="fragment"><b>Finance: </b>Risk assessment and stock market analysis.
+						</li>
+						<li class="fragment"><b>Physics: </b>Modeling complex physical systems, such as climate change
+							patterns
+							and nuclear reactions.
+						</li>
+						<li class="fragment"><b>Computer Graphics: </b>Rendering scenes in movies or video games
+							involving
+							light transport calculations.
+						</li>
+						<li class="fragment"><b>Healthcare: </b>Predicting disease spread.
+						</li>
+						<li class="fragment">and more...
+						</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h1 data-id="decision strategies header" style="font-size: 1.5em;">Monte Carlo Method</h1>
+					<h3>Example: Approximating π</h3>
+
+					<ol style="font-size: 0.6em;">
+						<li class="fragment">Concept:
+							<ul>
+								<li>Imagine a square with a side length of 1 unit and a quarter circle inside it,
+									touching its edges.</li>
+								<li>The area of the quarter circle is π/4, and the area of the square is 1.</li>
+							</ul>
+						</li>
+						<li class="fragment">Procedure:
+							<ul>
+								<li>Randomly scatter a large number of points across the square.</li>
+								<li>Count the number of points that fall inside the quarter circle.</li>
+							</ul>
+						</li>
+						<li class="fragment">Calculation:
+							<ul>
+								<li>The ratio of points inside the circle to the total points approximates π/4.</li>
+								<li>Multiply this ratio by 4 to approximate π.</li>
+							</ul>
+						</li>
+						<li class="fragment">Accuracy:
+							<ul>
+								<li>The accuracy of the approximation improves with the number of points used.</li>
+							</ul>
+						</li>
+					</ol>
+				</section>
+				<section>
+					<video data-autoplay src="video/monte_carlo.mp4"></video>
+				</section>
+			</section>
+
+
+			<!-- MCTS part 2 -->
+			<section data-background-color="white" data-background="images/mcts2.png" data-background-opacity="0.2">
+
+
+				<section data-auto-animate data-background="images/mcts2.png" data-background-opacity="0.6">
+					<h1 data-id="decision strategies header"
+						style="color: rgb(255, 255, 255); text-shadow: 9px -1px 13px black;">Monte Carlo Tree Search
+					</h1>
+				</section>
+
+				<section data-auto-animate data-auto-animate-duration="2.0">
+					<h1 data-id="decision strategies header" style="color: black;">Monte Carlo Tree Search</h1>
+					<h2>part 2</h2>
+				</section>
+
+				<section>
+					<h2>Incorporating Monte Carlo Methods</h2>
+					<ul style="font-size: 0.8em;">
+						<li class="fragment">MCTS combines the Monte Carlo Method with tree search.
+						</li>
+						<li class="fragment">
+							Uses random simulations to explore possible outcomes.
+						</li>
+
+						<li class="fragment">
+							These simulations help in making informed decisions in uncertain environments.
+						</li>
+					</ul>
+				</section>
+
+				<section data-auto-animate>
+					<h2>Building the Decision Tree</h2>
+					<ul style="font-size: 0.8em;">
+						<li class="fragment">Each node in the tree represents a potential future state.
+
+						</li>
+						<li class="fragment">Nodes are expanded based on the outcomes of Monte Carlo simulations.
+						</li>
+						<li class="fragment">Nodes are expanded based on the outcomes of Monte Carlo simulations.
 						</li>
 
 					</ul>
-					<a class="fragment" href="https://www.brainbashers.com/queens.asp?size=6">Let's try it!</a>
 				</section>
 
-
-				<section>
-					<img class="custom_image" src="images/backtracking_flowchart.svg"
-						style="width: 100%; height: auto;">
-				</section>
-
-			</section>
-
-			<!-- Local Search for CSP (title)-->
-			<section data-background-color="white" data-background="images/local_search_background.png"
-				data-background-opacity="1.0">
 				<section data-auto-animate>
-					<h1 data-id="backtrack_title" style="color: white; text-shadow: 9px -1px 13px black;">
-						Local Search for CSP</h1>
+					<h2 style="position: fixed; left: 10%; top:0%;">Challenges in Basic MCTS</h2>
+					<p style="position: fixed; top: 7%;">Random Node Selection can lead to inefficient
+						exploration</p>
+					<div class="r-stack">
+						<img src="images/over_explore.svg"
+							style="width: auto; height: 100%; position: fixed; left: 13%; top:30%;">
+						<img class="fragment" src="images/over_explore2.svg"
+							style="width: auto; height: 100%; position: fixed; left: 13%; top:30%;">
+					</div>
 				</section>
+
+				<section data-auto-animate>
+					<h2 style="position: fixed; left: 10%; top:0%;">Challenges in Basic MCTS</h2>
+					<p style="position: fixed; top: 7%;">Lack of guided exploration may result in overlooking promising
+						paths</p>
+					<div class="r-stack">
+						<img src="images/over_exploit.svg"
+							style="width: auto; height: 60%; position: fixed; left: 70%; top:20%;">
+						<img class="fragment" src="images/over_exploit2.svg"
+							style="width: auto; height: 60%; position: fixed; left: 70%; top:20%;">
+					</div>
+				</section>
+
+
+
 			</section>
 
-			<!-- Local Search for CSP (content)-->
-			<section data-background-color="white" data-background="images/local_search_background.png"
+
+
+			<!-- Multi Armed Bandit, UCB-1 -->
+			<section data-background-color="white" data-background="images/multi_armed_bandit.png"
 				data-background-opacity="0.2">
-				<section data-auto-animate>
-					<h1 style="color: black;">Local Search for CSP</h1>
-					<ul>
-						<li class="fragment"><b>Definition:</b> A search method that explores the "neighborhood" of
-							solutions to find a satisfactory solution.</li>
-						<li class="fragment"><b>Characteristic:</b> Focuses on incrementally improving an existing
-							solution.</li>
-						<li class="fragment"><b>Usage:</b> Effective for large CSPs with many variables.</li>
+
+				<section data-auto-animate data-background="images/multi_armed_bandit.png"
+					data-background-opacity="0.6">
+					<h1 data-id="decision strategies header"
+						style="color: rgb(255, 255, 255); text-shadow: 9px -1px 13px black;">Decision Strategies</h1>
+				</section>
+
+				<section data-auto-animate data-auto-animate-duration="2.0">
+					<h1 data-id="decision strategies header" style="color: black;">Decision Strategies</h1>
+					<h2>From Bandits to Trees</h2>
+				</section>
+
+				<section>
+					<h2>Multi-Armed Bandit Problem</h2>
+					<ul style="font-size: 0.8em;">
+						<li class="fragment" data-fragment-index="1">A classic scenario in decision theory and machine
+							learning.
+						</li>
+						<li class="fragment" data-fragment-index="2">Named after a
+							gambler choosing between multiple slot machines (bandits) with unknown payout rates.
+						</li>
+						<li class="fragment" data-fragment-index="3">The challenge is to maximize the total reward over
+							a series of (finite) trials,
+							where each action leads to a reward based on a probability
+							distribution that is initially unknown to the gambler.
+						</li>
+					</ul>
+					<img class="fragment custom longfade" data-fragment-index="3" data-id="bandit"
+						src="images/bandits.png" style="width: 50%; height: auto;">
+				</section>
+
+				<section>
+					<h2>Balance between Exploration and Exploitation</h2>
+					<ul style="font-size: 0.8em;">
+						<li class="fragment"><b>Exploration: </b>trying new options to gain more information
+							about
+							the environment. It's about taking risks to discover better solutions that are not currently
+							known.
+						</li>
+						<li class="fragment"><b>Exploitation: </b>making the best decision based on
+							existing knowledge. It's about using gathered information to achieve the best known result.
+						</li>
+						<li class="fragment">The key challenge in many decision-making processes is to find the right
+							balance between exploration (discovering new knowledge) and exploitation (using known
+							information to make decisions).
+						</li>
 					</ul>
 				</section>
 
 				<section>
-					<h2>Basic Components</h2>
-					<ul>
-						<li class="fragment"><b>Initial State:</b> Starting point for the search, often a random
-							assignment.</li>
-						<li class="fragment"><b>Successor Function:</b> Generates "neighbors" of the current state.</li>
-						<li class="fragment"><b>Evaluation Function:</b> Assesses the quality of an assignment.</li>
+					<h2>Using <b>UCB</b> Balance These</h2>
+
+					<ul style="font-size: 0.8em;">
+						<li class="fragment">UCB (Upper Confidence Bound) is an algorithmic strategy used to balance
+							exploration and exploitation in the multi-armed bandit problem.
+						</li>
+						<li class="fragment">It prioritizes options that are either less explored or have shown
+							promising results so far.
+						</li>
+						<li class="fragment">Balancing the need to explore less understood options while exploiting the
+							best-known options to maximize overall gain.
+						</li>
 					</ul>
 				</section>
-
-				<section>
-					<h2>Examples of Algorithms</h2>
-					<ul>
-						<li class="fragment"><b>Hill Climbing:</b> Moves only towards better states.</li>
-						<li class="fragment"><b>Simulated Annealing:</b> Allows temporary deteriorations to avoid local
-							maxima.</li>
-						<li class="fragment"><b>Tabu Search:</b> Uses memory to avoid previously explored states.</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>Min-Conflict Heuristic</h2>
-					<ul>
-						<li class="fragment"><b>Overview:</b> A heuristic for efficiently finding solutions in large
-							CSPs.</li>
-						<li class="fragment"><b>Strategy:</b> Focuses on minimizing the number of conflicts in the
-							current assignment.</li>
-						<li class="fragment"><b>Process:</b> Iteratively selects a conflicted variable and changes its
-							value to reduce conflicts.</li>
-						<li class="fragment"><b>Advantage:</b> Often converges quickly to a solution, especially useful
-							in problems with a large search space.</li>
-					</ul>
-				</section>
-
-				<section>
-					<img class="custom_image" src="images/min_conflict_flowchart.svg"
-						style="width: 100%; height: auto;">
-				</section>
-
 			</section>
+
+
+			<!-- MCTS part 3 -->
+			<section data-background-color="white" data-background="images/mcts3.png" data-background-opacity="0.2">
+
+				<section data-auto-animate data-background="images/mcts3.png" data-background-opacity="0.6">
+					<h1 data-id="decision strategies header"
+						style="color: rgb(255, 255, 255); text-shadow: 9px -1px 13px black;">Monte Carlo Tree Search
+					</h1>
+				</section>
+
+				<section data-auto-animate data-auto-animate-duration="2.0">
+					<h1 data-id="decision strategies header" style="color: black;">Monte Carlo Tree Search</h1>
+					<h2>part 3</h2>
+				</section>
+
+				<section>
+					<h2>From <b>UCB</b> to <b>UCT</b></h2>
+					<ul style="font-size: 0.8em;">
+						<li class="fragment">UCT (Upper Confidence bounds applied to Trees) is an adaptation of UCB
+							principles for tree structures.
+						</li>
+						<li class="fragment">Integrates UCB's statistical efficiency with MCTS's (Monte Carlo Tree
+							Search) capability to explore future scenarios.
+						</li>
+				</section>
+
+				<section>
+					<h2>Connection Between MCTS and UCT</h2>
+					<ul style="font-size: 0.8em;">
+						<li class="fragment">MCTS explores potential moves in games or decisions by simulating outcomes.
+						</li>
+						<li class="fragment">Builds a search tree based on these simulations.
+						</li>
+						<li class="fragment">UCT guides which branch to explore in each MCTS iteration.
+						</li>
+						<li class="fragment">Balances exploration of lesser-known branches and exploitation of promising
+							results.
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<p>The UCT formula is as follows:</p>
+					\[ \text{UCT} = \frac{w_i}{n_i} + c \sqrt{\frac{\ln N_i}{n_i}} \]
+					<ul style="font-size: 0.8em;">
+						<li><em style="font-weight: bold;">w<sub>i</sub></em>: The number of wins after taking the i-th
+							node.</li>
+						<li><em style="font-weight: bold;">n<sub>i</sub></em>: The number of simulations after taking
+							the i-th node.</li>
+						<li><em style="font-weight: bold;">N<sub>i</sub></em>: The total number of simulations performed
+							from the parent node to the i-th node.</li>
+						<li><em style="font-weight: bold;">c</em>: A constant that controls the balance between
+							exploration and exploitation.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Convergence</h2>
+					<ul style="font-size: 0.8em;">
+						<li class="fragment">Monte Carlo tree search <em>converges</em> to minimax when using UCT
+						</li>
+						<li class="fragment">This means that as the number of simulations in MCTS increases
+							indefinitely, its decisions will approach those that would have been made by the Minimax
+							algorithm.
+						</li>
+						<li class="fragment">The convergence towards Minimax underscores MCTS's ability to approach
+							optimal strategies in well-structured games, despite its fundamentally different approach.
+						</li>
+						<li class="fragment">Balances exploration of lesser-known branches and exploitation of promising
+							results.
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Exploring New Environments</h2>
+					<h3>MCTS vs. Alpha-Beta Pruning</h3>
+					<ul style="font-size: 0.7em;">
+						<li class="fragment">Minimax with alpha-beta pruning relies on an evaluation function and prior
+							game knowledge.</li>
+						<li class="fragment">These strategies may not aid in learning about new environments, as they
+							depend on existing notions of 'good' and 'bad'.</li>
+						<li class="fragment">MCTS excels in unknown environments where outcomes aren't pre-defined as
+							'good' or 'bad'.</li>
+						<li class="fragment">Unlike Minimax, MCTS learns from simulation outcomes, making it ideal for
+							exploring new scenarios.</li>
+						<li class="fragment">MCTS can improve over time using reinforcement learning, adapting its
+							strategy based on action results.</li>
+						<li class="fragment">MCTS's self-learning ability and effectiveness in unknown settings offer a
+							versatile alternative to traditional Minimax strategies.</li>
+					</ul>
+				</section>
+			</section>
+
+
 		</div>
 	</div>
 
@@ -483,6 +673,11 @@
 	<script src="plugin/markdown/markdown.js"></script>
 	<script src="plugin/highlight/highlight.js"></script>
 	<script src="plugin/zoom/zoom.js"></script>
+
+	<script src="plugin/math/math.js"></script>
+	<script>
+		Reveal.initialize({ plugins: [RevealMath.KaTeX] });
+	</script>
 
 	<script>
 		// More info about initialization & config:
